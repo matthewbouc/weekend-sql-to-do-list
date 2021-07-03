@@ -32,8 +32,8 @@ taskRouter.get('/', (req, res) => {
 
 taskRouter.post('/', (req, res) => {
     const newTask = req.body
-    const values = [newTask.task, newTask.completed]
-    const queryText = `INSERT INTO todo_list (task, completed) VALUES ($1, $2);`;
+    const values = [newTask.task, newTask.notes, newTask.completed]
+    const queryText = `INSERT INTO todo_list (task, notes, completed) VALUES ($1, $2, $3);`;
     pool.query(queryText, values).then(dbResponse => {
         console.log(`POST successful`, dbResponse);
         res.sendStatus(201);
