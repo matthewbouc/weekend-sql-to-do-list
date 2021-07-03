@@ -13,9 +13,15 @@
     <h1>Weekend To Do Application</h1>
 
     <div>
-        <input type="text" id="taskInput" placeholder = "Task">
-        <input type="text" id="taskNotes" placeholder = "Notes">
-        <button id="addTaskToList">Add Task</button>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="taskInput" placeholder="Enter Task">
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" id="taskNots" rows="3" placeholder="Task Details"></textarea>
+          </div>
+        <!-- <input type="text" id="taskInput" placeholder = "Task">
+        <input type="text" id="taskNotes" placeholder = "Notes"> -->
+        <button class="btn btn-success" id="addTaskToList">Add Task</button>
     </div>
     <table>
         <thead>

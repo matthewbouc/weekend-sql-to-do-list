@@ -28,12 +28,11 @@ function displayTasksToDOM(taskArray){
                         </div>
                     </div>
                 </td>
-                <td><button class="deleteButton">Delete</button></td>
+                <td><button class="btn btn-danger deleteButton">Delete</button></td>
             </tr>`)
     }
 }
-                // <td>${task.task}</td>
-                // <td>${task.notes}</td>
+
 
 function handlerCompleteButton(){
     const taskClicked = $(this).parent().parent().data('id');
