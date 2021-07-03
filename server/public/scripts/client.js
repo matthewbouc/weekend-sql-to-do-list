@@ -12,12 +12,12 @@ function taskListGET(){
         method: 'GET',
         url: '/taskList'
     })
-    .then(res => {
-        console.log('List retrieved from db', res);
+    .then(response => {
+        console.log('List retrieved from db', response);
         // **********ADD FUNCTION TO APPEND TO DOM**************
     })
-    .catch(err => {
-        console.log('ERROR caught on client side', err);
+    .catch(error => {
+        console.log('ERROR caught on client side', error);
     }
         )
 
@@ -25,8 +25,18 @@ function taskListGET(){
 
 
 function taskListPOST(){
-
-
+    $.ajax({
+        method: "POST",
+        url: '/taskList',
+        data: {} // **********ADD DATA - FROM DOM TO DB**************
+    })
+    .then(response => {
+        console.log(`Successful POST`, response);
+        taskListGET(); // Update DOM after posting new data to DOM
+    })
+    .catch(error => {
+        console.log(`error caught on client side`, error);
+    })
 }
 
 
