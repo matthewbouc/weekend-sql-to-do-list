@@ -11,16 +11,12 @@ function taskListGET(){
     $.ajax({
         method: 'GET',
         url: '/taskList'
-    })
-    .then(response => {
+    }).then(response => {
         console.log('List retrieved from db', response);
         // **********ADD FUNCTION TO APPEND TO DOM**************
-    })
-    .catch(error => {
+    }).catch(error => {
         console.log('ERROR caught on client side', error);
-    }
-        )
-
+    });
 }
 
 
@@ -29,20 +25,25 @@ function taskListPOST(){
         method: "POST",
         url: '/taskList',
         data: {} // **********ADD DATA - FROM DOM TO DB**************
-    })
-    .then(response => {
+    }).then(response => {
         console.log(`Successful POST`, response);
-        taskListGET(); // Update DOM after posting new data to DOM
-    })
-    .catch(error => {
+        taskListGET(); // Updates DOM after posting new data to DOM
+    }).catch(error => {
         console.log(`error caught on client side`, error);
-    })
+    });
 }
 
 
-function taskListDELETE(){
-
-
+function taskListDELETE(taskID){
+    $.ajax({
+        method: 'DELETE',
+        url: `/taskList/${taskID}`,
+    }).then(response => {
+        console.log(`Task deleted`, response);
+        taskListGET(); // updates DOM after deleting a task
+    }).catch(error => {
+        console.log(`error caught on client`, error);
+    });
 }
 
 
