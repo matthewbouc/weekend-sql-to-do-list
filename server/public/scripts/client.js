@@ -8,8 +8,8 @@ function onReady(){
 
 
     $('#taskDisplay').on('click', '.btn-danger', handlerDeleteButton);
-    $('.modalHere').on('click', '.btn-primary', function(){
-        const clickerID = $('.btn-primary').data('id');
+    $('.modalHere').on('click', '.finalDelete', function(){
+        const clickerID = $('.finalDelete').data('id');
         console.log('in click function listener with id', clickerID);
         taskListDELETE(clickerID);
     });
@@ -18,9 +18,16 @@ function onReady(){
 function displayTasksToDOM(taskArray){
     $('#taskDisplay').empty();
     for(const task of taskArray){
+        let completedButton = 'Complete';
+        let buttonClass = 'btn btn-success';
+        console.log('status of task completeion', task.completed);
+        if (task.completed == true){
+            completedButton = 'Completed';
+            buttonClass = 'btn btn-outline-dark';
+        }
         $('#taskDisplay').append(`
             <tr data-id="${task.id}" data-task="${task.task}">
-                <td><button class="completeButton" data-status="${task.completed}">${task.completed}</button></td>
+                <td><button class="${buttonClass} completeButton" data-status="${task.completed}">${completedButton}</button></td>
                 <td>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading${task.id}">
@@ -36,7 +43,7 @@ function displayTasksToDOM(taskArray){
                     </div>
                 </td>
                 <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Launch demo modal
+                Delete
               </button></td>
             </tr>`)
     }
@@ -64,8 +71,8 @@ function updateModal(taskID, taskName){
     $('#exampleModalLabel').append(`Task: ${taskName}`);
     $('.modalHere').empty();
     $('.modalHere').append(`
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" data-id="${taskID}" data-bs-dismiss="modal">DELETE</button>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger finalDelete" data-id="${taskID}" data-bs-dismiss="modal">DELETE</button>
     `)
 }
 
