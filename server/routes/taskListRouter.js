@@ -43,7 +43,17 @@ taskRouter.post('/', (req, res) => {
 })
 
 
-taskRouter.delete()
+taskRouter.delete('/:id', (req, res) => {
+    const taskID = req.params.id;
+    const queryText = `DELETE FROM todo_list WHERE id=$1;`;
+    pool.query(queryText, [taskID]).then(dbResponse => {
+        console.log(`deleted task`, dbResponse);
+        res.sendStatus(200);
+    }).catch(error => {
+        console.log(`Could not delete your task - server`, error);
+        res.sendStatus(500);
+    });
+});
 
 
 taskRouter.put()
