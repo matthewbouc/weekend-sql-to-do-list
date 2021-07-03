@@ -6,7 +6,6 @@ function onReady(){
 
 
 
-
 function taskListGET(){
     $.ajax({
         method: 'GET',
