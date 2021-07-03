@@ -19,7 +19,7 @@ function displayTasksToDOM(taskArray){
     $('#taskDisplay').empty();
     for(const task of taskArray){
         $('#taskDisplay').append(`
-            <tr data-id="${task.id}">
+            <tr data-id="${task.id}" data-task="${task.task}">
                 <td><button class="completeButton" data-status="${task.completed}">${task.completed}</button></td>
                 <td>
                     <div class="accordion-item">
@@ -52,15 +52,16 @@ function handlerCompleteButton(){
 
 function handlerDeleteButton(){
     const taskClickID = $(this).parent().parent().data('id');
+    const dataTask = $(this).parent().parent().data('task');
     console.log('in handler delete.. id is:', taskClickID);
-    updateModal(taskClickID);
+    updateModal(taskClickID, dataTask);
 }
 
 
-function updateModal(taskID){
+function updateModal(taskID, taskName){
     console.log('in update modal task id is', taskID);
     $('#exampleModalLabel').empty();
-    $('#exampleModalLabel').append(`$`)
+    $('#exampleModalLabel').append(`Task: ${taskName}`);
     $('.modalHere').empty();
     $('.modalHere').append(`
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
