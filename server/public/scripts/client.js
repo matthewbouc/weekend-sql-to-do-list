@@ -5,15 +5,28 @@ function onReady(){
     taskListGET();
     $('#addTaskToList').on('click', taskListPOST);
     $('#taskDisplay').on('click', '.completeButton', handlerCompleteButton);
-    $('#taskDisplay').on('click', '.deleteButton', handlerDeleteButton);
+
+    $('#taskDisplay').on('click', '.btn-danger', handlerDeleteButton);
+    $('.modalHere').on('click', '.finalDelete', function(){
+        const clickerID = $('.finalDelete').data('id');
+        console.log('in click function listener with id', clickerID);
+        taskListDELETE(clickerID);
+    });
 }
 
 function displayTasksToDOM(taskArray){
     $('#taskDisplay').empty();
     for(const task of taskArray){
+        let completedButton = 'Complete';
+        let buttonClass = 'btn btn-success';
+        console.log('status of task completeion', task.completed);
+        if (task.completed == true){
+            completedButton = 'Completed';
+            buttonClass = 'btn btn-outline-dark';
+        }
         $('#taskDisplay').append(`
-            <tr data-id="${task.id}">
-                <td><button class="completeButton" data-status="${task.completed}">${task.completed}</button></td>
+            <tr data-id="${task.id}" data-task="${task.task}">
+                <td><button class="${buttonClass} completeButton" data-status="${task.completed}">${completedButton}</button></td>
                 <td>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading${task.id}">
@@ -28,23 +41,41 @@ function displayTasksToDOM(taskArray){
                         </div>
                     </div>
                 </td>
-                <td><button class="btn btn-danger deleteButton">Delete</button></td>
-            </tr>`)
+                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+              </button></td>
+            </tr>
+        `)
     }
 }
 
 
 function handlerCompleteButton(){
     const taskClicked = $(this).parent().parent().data('id');
-    console.log(`this id is`, taskClicked);
-    taskListPUT(taskClicked);
+    const taskStatus = $(this).data('status');
+    console.log(`this id is`, taskClicked, taskStatus);
+    taskListPUT(taskClicked, taskStatus);
 }
+
 
 function handlerDeleteButton(){
-    const taskClicked = $(this).parent().parent().data('id');
-    taskListDELETE(taskClicked);
+    const taskClickID = $(this).parent().parent().data('id');
+    const dataTask = $(this).parent().parent().data('task');
+    console.log('in handler delete.. id is:', taskClickID);
+    updateModal(taskClickID, dataTask);
 }
 
+
+function updateModal(taskID, taskName){
+    console.log('in update modal task id is', taskID);
+    $('#exampleModalLabel').empty();
+    $('#exampleModalLabel').append(`Task: ${taskName}`);
+    $('.modalHere').empty();
+    $('.modalHere').append(`
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger finalDelete" data-id="${taskID}" data-bs-dismiss="modal">DELETE</button>
+    `)
+}
 
 function taskListGET(){
     $.ajax({
@@ -90,12 +121,12 @@ function taskListDELETE(taskID){
 }
 
 
-function taskListPUT(taskID){
+function taskListPUT(taskID, status){
     $.ajax({
         method: 'PUT',
         url: `taskList/${taskID}`,
         data: {
-            completed: true,
+            completed: !status,
         }
     }).then(response => {
         console.log(`Successful PUT request from client`, response)
