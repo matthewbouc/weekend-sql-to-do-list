@@ -47,6 +47,7 @@ function displayTasksToDOM(taskArray){
             </tr>
         `)
     }
+    $('.form-control').val('')
 }
 
 
