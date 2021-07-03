@@ -2,19 +2,36 @@ $(document).ready(onReady);
 
 function onReady(){
     console.log('jq');
+    taskListGET();
+    $('#addTaskToList').on('click', taskListPOST);
+    $('#taskDisplay').on('click', '.completeButton', handlerCompleteButton);
+    $('#taskDisplay').on('click', '.deleteButton', handlerDeleteButton);
 }
 
 function displayTasksToDOM(taskArray){
     $('#taskDisplay').empty();
     for(const task of taskArray){
         $('#taskDisplay').append(`
-            <tr data-id="${task.id}>
-                <td><button class="completeButton" data-status=${task.completed}>${task.completed}</button>
+            <tr data-id="${task.id}">
+                <td><button class="completeButton" data-status="${task.completed}">${task.completed}</button></td>
                 <td>${task.task}</td>
-                <td><button class="deleteButton">Delete</button>
+                <td><button class="deleteButton">Delete</button></td>
             </tr>`)
     }
 }
+
+
+function handlerCompleteButton(){
+    const taskClicked = $(this).parent().parent().data('id');
+    console.log(`this id is`, taskClicked);
+    taskListPUT(taskClicked);
+}
+
+function handlerDeleteButton(){
+    const taskClicked = $(this).parent().parent().data('id');
+    taskListDELETE(taskClicked);
+}
+
 
 function taskListGET(){
     $.ajax({
@@ -22,7 +39,7 @@ function taskListGET(){
         url: '/taskList'
     }).then(response => {
         console.log('List retrieved from db', response);
-        // **********ADD FUNCTION TO APPEND TO DOM**************
+        displayTasksToDOM(response);
     }).catch(error => {
         console.log('ERROR caught on client side', error);
     });
@@ -33,7 +50,10 @@ function taskListPOST(){
     $.ajax({
         method: "POST",
         url: '/taskList',
-        data: {} // **********ADD DATA - FROM DOM TO DB**************
+        data: {
+            task: $('#taskInput').val(),
+            completed: false
+        }
     }).then(response => {
         console.log(`Successful POST`, response);
         taskListGET();
@@ -60,7 +80,9 @@ function taskListPUT(taskID){
     $.ajax({
         method: 'PUT',
         url: `taskList/${taskID}`,
-        data: {} // **************ADD DATA TO CHANGE ******************
+        data: {
+            completed: true,
+        }
     }).then(response => {
         console.log(`Successful PUT request from client`, response)
         taskListGET();
