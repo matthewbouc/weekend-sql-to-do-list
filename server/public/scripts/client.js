@@ -6,7 +6,6 @@ function onReady(){
     $('#addTaskToList').on('click', taskListPOST);
     $('#taskDisplay').on('click', '.completeButton', handlerCompleteButton);
 
-
     $('#taskDisplay').on('click', '.btn-danger', handlerDeleteButton);
     $('.modalHere').on('click', '.finalDelete', function(){
         const clickerID = $('.finalDelete').data('id');
@@ -45,15 +44,17 @@ function displayTasksToDOM(taskArray){
                 <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Delete
               </button></td>
-            </tr>`)
+            </tr>
+        `)
     }
 }
 
 
 function handlerCompleteButton(){
     const taskClicked = $(this).parent().parent().data('id');
-    console.log(`this id is`, taskClicked);
-    taskListPUT(taskClicked);
+    const taskStatus = $(this).data('status');
+    console.log(`this id is`, taskClicked, taskStatus);
+    taskListPUT(taskClicked, taskStatus);
 }
 
 
@@ -120,12 +121,12 @@ function taskListDELETE(taskID){
 }
 
 
-function taskListPUT(taskID){
+function taskListPUT(taskID, status){
     $.ajax({
         method: 'PUT',
         url: `taskList/${taskID}`,
         data: {
-            completed: true,
+            completed: !status,
         }
     }).then(response => {
         console.log(`Successful PUT request from client`, response)
