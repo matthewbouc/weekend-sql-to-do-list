@@ -14,8 +14,21 @@ function displayTasksToDOM(taskArray){
         $('#taskDisplay').append(`
             <tr data-id="${task.id}">
                 <td><button class="completeButton" data-status="${task.completed}">${task.completed}</button></td>
-                <td>${task.task}</td>
-                <td><button class="deleteButton">Delete</button></td>
+                <td>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading${task.id}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${task.id}" aria-expanded="false" aria-controls="collapse${task.id}">
+                            ${task.task}
+                        </button>
+                        </h2>
+                        <div id="collapse${task.id}" class="accordion-collapse collapse" aria-labelledby="heading${task.id}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            ${task.notes}
+                        </div>
+                        </div>
+                    </div>
+                </td>
+                <td><button class="btn btn-danger deleteButton">Delete</button></td>
             </tr>`)
     }
 }
@@ -52,6 +65,7 @@ function taskListPOST(){
         url: '/taskList',
         data: {
             task: $('#taskInput').val(),
+            notes: $('#taskNotes').val(),
             completed: false
         }
     }).then(response => {
