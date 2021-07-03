@@ -5,7 +5,14 @@ function onReady(){
     taskListGET();
     $('#addTaskToList').on('click', taskListPOST);
     $('#taskDisplay').on('click', '.completeButton', handlerCompleteButton);
-    $('#taskDisplay').on('click', '.deleteButton', handlerDeleteButton);
+
+
+    $('#taskDisplay').on('click', '.btn-danger', handlerDeleteButton);
+    $('.modalHere').on('click', '.btn-primary', function(){
+        const clickerID = $('.btn-primary').data('id');
+        console.log('in click function listener with id', clickerID);
+        taskListDELETE(clickerID);
+    });
 }
 
 function displayTasksToDOM(taskArray){
@@ -28,7 +35,9 @@ function displayTasksToDOM(taskArray){
                         </div>
                     </div>
                 </td>
-                <td><button class="btn btn-danger deleteButton">Delete</button></td>
+                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+              </button></td>
             </tr>`)
     }
 }
@@ -40,11 +49,24 @@ function handlerCompleteButton(){
     taskListPUT(taskClicked);
 }
 
+
 function handlerDeleteButton(){
-    const taskClicked = $(this).parent().parent().data('id');
-    taskListDELETE(taskClicked);
+    const taskClickID = $(this).parent().parent().data('id');
+    console.log('in handler delete.. id is:', taskClickID);
+    updateModal(taskClickID);
 }
 
+
+function updateModal(taskID){
+    console.log('in update modal task id is', taskID);
+    $('#exampleModalLabel').empty();
+    $('#exampleModalLabel').append(`$`)
+    $('.modalHere').empty();
+    $('.modalHere').append(`
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-id="${taskID}" data-bs-dismiss="modal">DELETE</button>
+    `)
+}
 
 function taskListGET(){
     $.ajax({
