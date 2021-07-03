@@ -27,7 +27,7 @@ function taskListPOST(){
         data: {} // **********ADD DATA - FROM DOM TO DB**************
     }).then(response => {
         console.log(`Successful POST`, response);
-        taskListGET(); // Updates DOM after posting new data to DOM
+        taskListGET();
     }).catch(error => {
         console.log(`error caught on client side`, error);
     });
@@ -40,14 +40,22 @@ function taskListDELETE(taskID){
         url: `/taskList/${taskID}`,
     }).then(response => {
         console.log(`Task deleted`, response);
-        taskListGET(); // updates DOM after deleting a task
+        taskListGET();
     }).catch(error => {
         console.log(`error caught on client`, error);
     });
 }
 
 
-function taskListPUT(){
-
-    
+function taskListPUT(taskID){
+    $.ajax({
+        method: 'PUT',
+        url: `taskList/${taskID}`,
+        data: {} // **************ADD DATA TO CHANGE ******************
+    }).then(response => {
+        console.log(`Successful PUT request from client`, response)
+        taskListGET();
+    }).catch(error => {
+        console.log(`Error PUT-ing on client`, error);
+    });
 }
