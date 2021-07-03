@@ -11,9 +11,29 @@ const pool = new Pool({
     max: 10
 });
 
-pool.on('connect', () => {
+pool.on('connect', response => {
     console.log('PG connected')
 });
-pool.on('error', () => {
+pool.on('error', error => {
     console.log('ERROR PG', error);
 });
+
+
+taskRouter.get('/', (req, res) => {
+    const queryText ='SELECT * FROM to_do_list;';
+}).then().catch();
+
+
+taskRouter.post().then().catch();
+
+
+taskRouter.delete().then().catch();
+
+
+taskRouter.put().then().catch();
+
+
+
+
+
+module.exports = taskRouter;
