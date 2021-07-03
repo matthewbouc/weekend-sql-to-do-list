@@ -4,7 +4,17 @@ function onReady(){
     console.log('jq');
 }
 
-
+function displayTasksToDOM(taskArray){
+    $('#taskDisplay').empty();
+    for(const task of taskArray){
+        $('#taskDisplay').append(`
+            <tr data-id="${task.id}>
+                <td><button class="completeButton" data-status=${task.completed}>${task.completed}</button>
+                <td>${task.task}</td>
+                <td><button class="deleteButton">Delete</button>
+            </tr>`)
+    }
+}
 
 function taskListGET(){
     $.ajax({
