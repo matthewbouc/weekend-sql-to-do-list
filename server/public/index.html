@@ -17,13 +17,11 @@
             <div class="col-9">
                 <h1>To Do Application</h1>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="taskInput" placeholder="Enter Task">
+                    <input type="text" class="form-control" maxlength="49" id="taskInput" placeholder="Enter Task">
                 </div>
                 <div class="mb-3">
                     <textarea class="form-control" id="taskNotes" maxlength="349" rows="3" placeholder="Task Details"></textarea>
                 </div>
-                <!-- <input type="text" id="taskInput" placeholder = "Task">
-                <input type="text" id="taskNotes" placeholder = "Notes"> -->
                 <button class="btn btn-success" id="addTaskToList">Add Task</button>
                 <table>
                     <thead>
@@ -36,20 +34,11 @@
                             <th id="statusColumn">Status</th>
                             <th>Task</th>
                             <th>Delete</th>
-
-                            <!--PREPEND THESE TO NOTES?
-                            <th>Date Added</th>
-                            <th>Date Completed</th> -->
                         </tr>
                     </thead>
                     <tbody id="taskDisplay">
                         <!-- Display tasks Here -->
                     </tbody>
-                    <!-- <tfoot>
-                        <tr>
-                            <td>Maybe something in footer</td>
-                        </tr>
-                    </tfoot> -->
                 </table>
             
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
