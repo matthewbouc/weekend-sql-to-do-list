@@ -14,7 +14,12 @@ function displayTasksToDOM(taskArray){
         $('#taskDisplay').append(`
             <tr data-id="${task.id}">
                 <td><button class="completeButton" data-status="${task.completed}">${task.completed}</button></td>
+                
+                
+
+
                 <td>${task.task}</td>
+                <td>${task.notes}</td>
                 <td><button class="deleteButton">Delete</button></td>
             </tr>`)
     }
@@ -52,6 +57,7 @@ function taskListPOST(){
         url: '/taskList',
         data: {
             task: $('#taskInput').val(),
+            notes: $('#taskNotes').val(),
             completed: false
         }
     }).then(response => {
