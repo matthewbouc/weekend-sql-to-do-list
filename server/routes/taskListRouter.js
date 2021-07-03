@@ -20,7 +20,7 @@ pool.on('error', error => {
 
 
 taskRouter.get('/', (req, res) => {
-    const queryText ='SELECT * FROM todo_list;';
+    const queryText ='SELECT * FROM todo_list ORDER BY "completed";';
     pool.query(queryText).then(dbResponse => {
         res.send(dbResponse.rows);
     }).catch(error => {
