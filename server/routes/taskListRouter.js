@@ -56,7 +56,17 @@ taskRouter.delete('/:id', (req, res) => {
 });
 
 
-taskRouter.put()
+taskRouter.put('/:id', (req, res) => {
+    const taskID = req.params.id;
+    const completeStatus = req.body.completed;
+    const queryText = `UPDATE todo_list SET "completed"=$1 WHERE id=$2;`
+    pool.query(queryText, [completeStatus, taskID]).then(dbResponse => {
+        console.log(`Updated Koala Complete Status`, dbResponse);
+        res.sendStatus(202);
+    }).catch(error => {
+        console.log(`ERROR UPDATING COMPLETE STATUS`, error);
+    });
+});
 
 
 
