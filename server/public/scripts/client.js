@@ -1,19 +1,27 @@
 $(document).ready(onReady);
 
+/**
+ * Runs when document loads. GETs current DB and initiates listeners.
+ */
 function onReady(){
-    console.log('jq');
+    //console.log('jq');
     taskListGET();
-    $('#addTaskToList').on('click', taskListPOST);
-    $('#taskDisplay').on('click', '.completeButton', handlerCompleteButton);
-
-    $('#taskDisplay').on('click', '.btn-danger', handlerDeleteButton);
-    $('.modalHere').on('click', '.finalDelete', function(){
+    $('#addTaskToList').on('click', taskListPOST); // Listener for add task button
+    $('#taskDisplay').on('click', '.completeButton', handlerCompleteButton); //Listener for DOM complete button
+    $('#taskDisplay').on('click', '.btn-danger', handlerDeleteButton); // Listener for DOM delete button
+    $('.modalHere').on('click', '.finalDelete', function(){ // Listener for the modal DELETE button
         const clickerID = $('.finalDelete').data('id');
         console.log('in click function listener with id', clickerID);
         taskListDELETE(clickerID);
     });
+    $('#ascDESC').on('click', taskListGETDesc); //Listener for query param.  Puts completed on top.
 }
 
+/**
+ * Appends tasks and notes stored in DB to DOM - includes Complete/Completed button and delete button (triggers modal).
+ * Clears texts inputs
+ * @param {Array} taskArray 
+ */
 function displayTasksToDOM(taskArray){
     $('#taskDisplay').empty();
     for(const task of taskArray){
@@ -22,7 +30,7 @@ function displayTasksToDOM(taskArray){
         console.log('status of task completion', task.completed);
         if (task.completed == true){
             completedButton = 'Completed';
-            buttonClass = 'btn btn-outline-dark';
+            buttonClass = 'btn btn-outline-light';
         }
         $('#taskDisplay').append(`
             <tr data-id="${task.id}" data-task="${task.task}">
@@ -50,7 +58,9 @@ function displayTasksToDOM(taskArray){
     $('.form-control').val('')
 }
 
-
+/**
+ * Determine data-id value and data-status value of row clicked. Use as params in taskListPUT()
+ */
 function handlerCompleteButton(){
     const taskClicked = $(this).parent().parent().data('id');
     const taskStatus = $(this).data('status');
@@ -58,7 +68,9 @@ function handlerCompleteButton(){
     taskListPUT(taskClicked, taskStatus);
 }
 
-
+/**
+ * Determine data-id and data-task values of row.  Use as params for updateModal()
+ */
 function handlerDeleteButton(){
     const taskClickID = $(this).parent().parent().data('id');
     const dataTask = $(this).parent().parent().data('task');
@@ -66,18 +78,25 @@ function handlerDeleteButton(){
     updateModal(taskClickID, dataTask);
 }
 
-
-function updateModal(taskID, taskName){
-    console.log('in update modal task id is', taskID);
-    $('#exampleModalLabel').empty();
-    $('#exampleModalLabel').append(`Task: ${taskName}`);
-    $('.modalHere').empty();
-    $('.modalHere').append(`
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger finalDelete" data-id="${taskID}" data-bs-dismiss="modal">DELETE</button>
-    `)
+/**
+ * Sends DELETE request for a specific id value.  Runs taskListGET on success.
+ * @param {Number} taskID 
+ */
+function taskListDELETE(taskID){
+    $.ajax({
+        method: 'DELETE',
+        url: `/taskList/${taskID}`,
+    }).then(response => {
+        console.log(`Task deleted`, response);
+        taskListGET();
+    }).catch(error => {
+        console.log(`error caught on client`, error);
+    });
 }
 
+/**
+ * Sends GET request to server.  On success runs displayTasksToDOM with returned array.
+ */
 function taskListGET(){
     $.ajax({
         method: 'GET',
@@ -90,8 +109,25 @@ function taskListGET(){
     });
 }
 
+/**
+ * Sends GET request to server using query param, requesting the order to be changed to Descending.
+ */
+function taskListGETDesc(){
+    $.ajax({
+        method: 'GET',
+        url: '/taskList?order=DESC'
+    }).then(response => {
+        console.log('List retrieved from db', response);
+        displayTasksToDOM(response);
+    }).catch(error => {
+        console.log('ERROR caught on client side', error);
+    });
+}
 
-
+/**
+ * Sends POST request to server with object containing task and notes inputs along with a completed: false.
+ * Runs taskListGET() on success.
+ */
 function taskListPOST(){
     $.ajax({
         method: "POST",
@@ -110,19 +146,12 @@ function taskListPOST(){
 }
 
 
-function taskListDELETE(taskID){
-    $.ajax({
-        method: 'DELETE',
-        url: `/taskList/${taskID}`,
-    }).then(response => {
-        console.log(`Task deleted`, response);
-        taskListGET();
-    }).catch(error => {
-        console.log(`error caught on client`, error);
-    });
-}
-
-
+/**
+ * Sends PUT request to server to change the completed status of a specific id to the opposite
+ * of what it is currently.  Runs taskListGET() on success.
+ * @param {Number} taskID 
+ * @param {Boolean} status 
+ */
 function taskListPUT(taskID, status){
     $.ajax({
         method: 'PUT',
@@ -136,4 +165,21 @@ function taskListPUT(taskID, status){
     }).catch(error => {
         console.log(`Error PUT-ing on client`, error);
     });
+}
+
+/**
+ * Takes in taskID and taskName.  Task id is used to create a delete button on the modal that references the
+ * intended delete target.  taskName is used as the header of the modal.
+ * @param {Number} taskID 
+ * @param {String} taskName 
+ */
+function updateModal(taskID, taskName){
+    console.log('in update modal task id is', taskID);
+    $('#exampleModalLabel').empty();
+    $('#exampleModalLabel').append(`${taskName}`);
+    $('.modalHere').empty();
+    $('.modalHere').append(`
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-danger finalDelete" data-id="${taskID}" data-bs-dismiss="modal">DELETE</button>
+    `)
 }

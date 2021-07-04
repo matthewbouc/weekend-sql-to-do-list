@@ -19,8 +19,13 @@ pool.on('error', error => {
 });
 
 
+/**
+ * Gets and returns full list of DB ordered by completion status, then id.  Completed status can be reversed with a req.query.
+ */
 taskRouter.get('/', (req, res) => {
-    const queryText =`SELECT * FROM todo_list ORDER BY completed, id;`;
+    const queryParam = req.query.order || 'ASC';
+    console.log(queryParam);
+    const queryText =`SELECT * FROM todo_list ORDER BY completed ${queryParam}, id;`;
     pool.query(queryText).then(dbResponse => {
         res.send(dbResponse.rows);
     }).catch(error => {
@@ -29,8 +34,20 @@ taskRouter.get('/', (req, res) => {
     });
 });
 
+// taskRouter.get('/', (req, res) => {
+//     const queryText =`SELECT * FROM todo_list ORDER BY completed, id;`;
+//     pool.query(queryText).then(dbResponse => {
+//         res.send(dbResponse.rows);
+//     }).catch(error => {
+//         console.log(`error retrieving from Database`, error);
+//         res.sendStatus(500);
+//     });
+// });
 
 
+/**
+ * Posts new object to database containing task and note inputs and completed status of false.
+ */
 taskRouter.post('/', (req, res) => {
     const newTask = req.body
     const values = [newTask.task, newTask.notes, newTask.completed]
@@ -43,7 +60,9 @@ taskRouter.post('/', (req, res) => {
     });
 })
 
-
+/**
+ * Deletes a specific row of DB based on id value.
+ */
 taskRouter.delete('/:id', (req, res) => {
     const taskID = req.params.id;
     const queryText = `DELETE FROM todo_list WHERE id=$1;`;
@@ -57,6 +76,9 @@ taskRouter.delete('/:id', (req, res) => {
 });
 
 
+/**
+ * Changes the completed status of an id to !status.
+ */
 taskRouter.put('/:id', (req, res) => {
     const taskID = req.params.id;
     const completeStatus = req.body.completed;
