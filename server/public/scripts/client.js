@@ -19,7 +19,7 @@ function displayTasksToDOM(taskArray){
     for(const task of taskArray){
         let completedButton = 'Complete';
         let buttonClass = 'btn btn-success';
-        console.log('status of task completeion', task.completed);
+        console.log('status of task completion', task.completed);
         if (task.completed == true){
             completedButton = 'Completed';
             buttonClass = 'btn btn-outline-dark';
@@ -89,6 +89,7 @@ function taskListGET(){
         console.log('ERROR caught on client side', error);
     });
 }
+
 
 
 function taskListPOST(){
