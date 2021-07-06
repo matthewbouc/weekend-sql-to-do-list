@@ -17,4 +17,4 @@ pool.on('error', error => {
 });
 
 
-module.exports(pool);
+module.exports = pool;
