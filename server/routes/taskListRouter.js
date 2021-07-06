@@ -18,7 +18,7 @@ taskRouter.get('/', (req, res) => {
     //Could do an if statement here to append to the end of queryText.  It would look something like:
     // const queryParam = req.query.order;
     // let queryText =`SELECT * FROM todo_list ORDER BY completed ${queryParam}, id`
-    // if (queryParam !== ''){
+    // if (queryParam){
     //    queryText += `${req.query.order};`
     // }else{
     //    queryText += `;`
