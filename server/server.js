@@ -7,7 +7,10 @@ app.listen(PORT, () => {
     console.log('SERVER Listening on PORT', PORT)
 });
 
+// ****** Middleware ******
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static('server/public'));
+
+// ****** Routes ******
 app.use('/taskList', taskRouter);
