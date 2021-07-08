@@ -9,13 +9,10 @@ function onReady(){
     $('#addTaskToList').on('click', taskListPOST); // Listener for add task button
     $('#taskDisplay').on('click', '.completeButton', handlerCompleteButton); //Listener for DOM complete button
     $('#taskDisplay').on('click', '.btn-danger', handlerDeleteButton); // Listener for DOM delete button
-    $('.modalHere').on('click', '.finalDelete', function(){ // Listener for the modal DELETE button
-        const clickerID = $('.finalDelete').data('id');
-        console.log('in click function listener with id', clickerID);
-        taskListDELETE(clickerID);
-    });
+    $('.modalButtons').on('click', '.finalDelete', modalListener); // Listener for the modal DELETE button
     $('#ascDESC').on('click', taskListGETDesc); //Listener for query param.  Puts completed on top.
 }
+
 
 /**
  * Appends tasks and notes stored in DB to DOM - includes Complete/Completed button and delete button (triggers modal).
@@ -77,6 +74,17 @@ function handlerDeleteButton(){
     console.log('in handler delete.. id is:', taskClickID);
     updateModal(taskClickID, dataTask);
 }
+
+
+/**
+ * Listens for click on task delete button.  Records data-id.  Runs taskListDELETE()
+ */
+ function modalListener(){
+    const clickerID = $('.finalDelete').data('id');
+    console.log('in click function listener with id', clickerID);
+    taskListDELETE(clickerID);
+}
+
 
 /**
  * Sends DELETE request for a specific id value.  Runs taskListGET on success.
@@ -177,8 +185,8 @@ function updateModal(taskID, taskName){
     console.log('in update modal task id is', taskID);
     $('#exampleModalLabel').empty();
     $('#exampleModalLabel').append(`${taskName}`);
-    $('.modalHere').empty();
-    $('.modalHere').append(`
+    $('.modalButtons').empty();
+    $('.modalButtons').append(`
         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-outline-danger finalDelete" data-id="${taskID}" data-bs-dismiss="modal">DELETE</button>
     `)

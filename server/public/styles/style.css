@@ -20,6 +20,9 @@ h1 {
     min-width: 300px;
 }
 
+.accordion-item{
+    color: black;
+}
 
 table {
     margin-top: 30px;
