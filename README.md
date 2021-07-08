@@ -1,9 +1,44 @@
-# Project Name
+# SQL TO DO LIST APPLICATION
 
-[Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md
+Weekend Challenge.
 
 ## Description
 
-Your project description goes here. What problem did you solve? How did you solve it?
+This project is a To Do List App that accepts inputs for a task and details and stores that task on a SQL database using a POST request and pg query.  The task can be completed with a click of a button (PUT request) and deleted (DELETE request).  The tasks are also pulled from the database and displayed on the DOM with a GET request.  Query params were used to allow the user change the display order.
 
-Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
+
+To Do List Functionality - 
+ - A task and details can be entered into the text inputs (49 and 349 characters, respectively).
+ - Add Task will collect the inputs then POST and INSERT INTO the database.
+ - Database tasks are displayed on the DOM as accordion buttons.  The Task is the primary text and the details are revealed when the accordion button is clicked.
+    - Each task is appended with 'Complete' and 'Delete' buttons.
+ - The complete will change the status to Completed and 'grey out' the button. The status can be reset by clicking the 'greyed out' Completed button.
+ - The delete button will activate a modal, verifying that the user wants to permanently delete the task from the database.  By clicking DELETE on the modal, the task is removed from the DOM and database.
+ - An 'Order' button is present under Status, which reverses the order of the tasks, so completed tasks are on top.
+    - Tasks are inherently ordered by non-completed on top, completed on bottom, then by database id.
+
+
+Image of [To Do App](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App.png).
+![Completed Status]()
+![Modal]()
+
+
+## Installation:
+
+ - Fork and clone repo
+ 
+ While in repo folder terminal
+ - 'npm install'
+ - 'npm start'
+
+ - Go to:  http://localhost:5000
+
+
+## Built With:
+
+html/css
+Bootstrap
+jQuery
+Ajax
+Node/Express
+PostgreSQL
