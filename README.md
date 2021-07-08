@@ -19,19 +19,20 @@ To Do List Functionality -
 
 
 Image of [To Do App](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App.png).
-![Completed Status]()
-![Modal]()
+![Completed Status](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App-completes.png)
+![Modal](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App-modal.png)
 
 
 ## Installation:
 
  - Fork and clone repo
  
- While in repo folder terminal
  - 'npm install'
  - 'npm start'
+ 
+ - database.sql can be used for postgreSQL database
 
- - Go to:  http://localhost:5000
+ - http://localhost:5000
 
 
 ## Built With:
@@ -42,3 +43,9 @@ jQuery
 Ajax
 Node/Express
 PostgreSQL
+
+## Future Development:
+
+- Don't allow empty Task - empty details OK
+- Improve query param - don't allow it to reset after GET request
+- Include dates: task created and task completed
