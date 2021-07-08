@@ -39,12 +39,12 @@ Image of [To Do App](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/
 
 ## Built With:
 
-html/css
-Bootstrap
-jQuery
-Ajax
-Node/Express
-PostgreSQL
+- html/css
+- Bootstrap
+- jQuery
+- Ajax
+- Node/Express
+- PostgreSQL
 
 ## Future Development:
 
