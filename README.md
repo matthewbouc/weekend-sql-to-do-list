@@ -17,6 +17,9 @@ To Do List Functionality -
  - An 'Order' button is present under Status, which reverses the order of the tasks, so completed tasks are on top.
     - Tasks are inherently ordered by non-completed on top, completed on bottom, then by database id.
 
+## Screenshot
+
+![Project Screen Shot](./server/images/To%Do%App-completes.png)
 
 Image of [To Do App](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App.png).
 
