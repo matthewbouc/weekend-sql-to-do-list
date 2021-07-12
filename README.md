@@ -21,10 +21,6 @@ To Do List Functionality -
 
 ![Project Screen Shot](./server/Images/ScreenshotCompletes.png)
 
-Image of [To Do App](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App.png).
-
-[Completed Status](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App-completes.png).
-
 [Modal](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App-modal.png).
 
 
