@@ -19,7 +19,7 @@ To Do List Functionality -
 
 ## Screenshot
 
-![Project Screen Shot](./server/images/To%Do%App-completes.png)
+![Project Screen Shot](./server/images/ScreenshotCompletes.png)
 
 Image of [To Do App](https://github.com/matthewbouc/weekend-sql-to-do-list/blob/master/server/Images/To%20Do%20App.png).
 
